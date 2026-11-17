@@ -18,6 +18,4 @@ data/raw/*
 # Processed datasets
 data/processed/*
 
-# Saved model files
-models/*.pkl
-models/*.joblib
+
