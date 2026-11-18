@@ -37,9 +37,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# ==========================================
-# CUSTOM FITPREDICT STYLING
-# ==========================================
+
 
 st.markdown("""
 <style>
@@ -260,20 +258,6 @@ def prepare_input(gender, age, height, weight, duration, heart_rate, body_temp):
 
 
 
-if st.button("Predict Calories Burned"):
-
-    final_input = prepare_input(
-        gender,
-        age,
-        height,
-        weight,
-        duration,
-        heart_rate,
-        body_temp
-    )
-
-    prediction = model.predict(final_input)
-
    
 if st.button("🔥 Predict Calories Burned"):
 
@@ -289,22 +273,13 @@ if st.button("🔥 Predict Calories Burned"):
 
     prediction = model.predict(final_input)[0]
 
+   
     st.markdown(
-        f"""
-        <div class="result-card">
-            <div class="result-label">
-                YOUR ESTIMATED CALORIE EXPENDITURE
-            </div>
-
-            <div class="result-value">
-                {prediction:.2f} kcal
-            </div>
-
-            <div class="result-label">
-                Prediction generated successfully
-            </div>
-        </div>
-        """,
+        f'<div class="result-card">'
+        f'<div class="result-label">YOUR ESTIMATED CALORIE EXPENDITURE</div>'
+        f'<div class="result-value">{prediction:.2f} kcal</div>'
+        f'<div class="result-label">Prediction generated successfully</div>'
+        f'</div>',
         unsafe_allow_html=True
     )
 
