@@ -37,7 +37,130 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("🔥 FitPredict")
+# ==========================================
+# CUSTOM FITPREDICT STYLING
+# ==========================================
+
+st.markdown("""
+<style>
+
+/* Main application background */
+.stApp {
+    background-color: #0B1220;
+    color: #F8FAFC;
+}
+
+/* Main content width */
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    max-width: 1100px;
+}
+
+/* Main heading */
+.main-title {
+    font-size: 42px;
+    font-weight: 800;
+    color: #A3E635;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+/* Subtitle */
+.subtitle {
+    text-align: center;
+    color: #CBD5E1;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+/* Section headings */
+h2, h3 {
+    color: #A3E635 !important;
+}
+
+/* Input labels */
+.stTextInput label,
+.stNumberInput label,
+.stSelectbox label {
+    color: #E2E8F0 !important;
+    font-weight: 600;
+}
+
+/* Input fields */
+.stNumberInput input,
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #1E293B;
+    color: white;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #84CC16;
+    color: #0B1220;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    padding: 12px 25px;
+    width: 100%;
+}
+
+/* Button hover */
+.stButton > button:hover {
+    background-color: #A3E635;
+    color: #0B1220;
+    border: none;
+}
+
+/* Prediction result card */
+.result-card {
+    background: linear-gradient(135deg, #1E293B, #172554);
+    border: 1px solid #84CC16;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* Result number */
+.result-value {
+    font-size: 48px;
+    font-weight: 800;
+    color: #A3E635;
+}
+
+/* Result description */
+.result-label {
+    color: #CBD5E1;
+    font-size: 16px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+
+
+
+st.markdown(
+    '<div class="main-title">🔥 FitPredict</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="subtitle">'
+    'Your Intelligent Exercise Calorie Estimator'
+    '</div>',
+    unsafe_allow_html=True
+)
+
+st.divider()
+
+st.write(
+    "Estimate exercise-related calorie expenditure "
+    "using machine learning and physiological data."
+)
+
 
 st.subheader(
     "Machine Learning-Based Calorie Expenditure Prediction"
@@ -151,9 +274,48 @@ if st.button("Predict Calories Burned"):
 
     prediction = model.predict(final_input)
 
-    st.success(
-        f"Estimated Calories Burned: {prediction[0]:.2f} kcal"
+   
+if st.button("🔥 Predict Calories Burned"):
+
+    final_input = prepare_input(
+        gender,
+        age,
+        height,
+        weight,
+        duration,
+        heart_rate,
+        body_temp
     )
+
+    prediction = model.predict(final_input)[0]
+
+    st.markdown(
+        f"""
+        <div class="result-card">
+            <div class="result-label">
+                YOUR ESTIMATED CALORIE EXPENDITURE
+            </div>
+
+            <div class="result-value">
+                {prediction:.2f} kcal
+            </div>
+
+            <div class="result-label">
+                Prediction generated successfully
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.subheader("Your Exercise Summary")
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Duration", f"{duration} min")
+    col2.metric("Heart Rate", f"{heart_rate} bpm")
+    col3.metric("Body Temperature", f"{body_temp} °C")
+
 
 
 st.divider()
